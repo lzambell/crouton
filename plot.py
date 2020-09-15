@@ -50,7 +50,11 @@ def plot_run_summary(option=None):
     ax_ang.set_xlabel('phi [deg]')                             
     ax_ang.set_ylabel('theta [deg]')                             
 
+
     date_nice = dc.runs[-1].date_ini[:4]+"/"+dc.runs[-1].date_ini[4:6]+"/"+dc.runs[-1].date_ini[6:]
+    if(dc.runs[-1].n_files > 1):
+        date_nice += " to " + dc.runs[-1].date_end[:4]+"/"+dc.runs[-1].date_end[4:6]+"/"+dc.runs[-1].date_end[6:]
+
     fig.suptitle(date_nice+ ": Ntot = "+str(dc.runs[-1].n_events)+" [%.2f Hz]"%(dc.runs[-1].rate_all)+", Nmu = "+str(dc.runs[-1].n_muons)+" [%.2f Hz]"%(dc.runs[-1].rate_muons))
     fig.subplots_adjust(top=0.92, bottom=0.08, left=0.06, right=0.98, hspace=0.45, wspace=0.45)
     
@@ -59,7 +63,10 @@ def plot_run_summary(option=None):
     else:
         option = ""
 
-    plt.savefig("plot/run_control_"+dc.runs[-1].date_ini+".png")
+    if(dc.runs[-1].n_files == 1):
+        plt.savefig("plot/run_control_"+dc.runs[-1].date_ini+".png")
+    else:
+        plt.savefig("plot/run_control_"+dc.runs[-1].date_ini+"_to_"+dc.runs[-1].date_end+".png")
     #plt.show()
     plt.close()
     

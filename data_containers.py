@@ -20,20 +20,21 @@ class run_info:
         self.rate_all   = -1.
         self.rate_muons = -1.
         
-    def set_run_name(self, date_ini, date_end, hour_ini, hour_end, n_files):
+    def set_run_name(self, date_ini, date_end, hour_ini, hour_end):
         """ from the file name """
         self.date_ini = date_ini
         self.hour_ini = hour_ini
         self.date_end = date_end
         self.hour_end = hour_end
-        self.n_files  = n_files
 
-    def set_run_infos(self, t_first, t_last, n_events):
+
+    def set_run_infos(self, t_first, t_last, n_events, n_files):
         """ from reading the tree """
         self.t_first  = t_first
         self.t_last   = t_last
         self.run_dt   = t_last - t_first
         self.n_events = n_events
+        self.n_files  = n_files
 
     def set_n_muons_and_rate(self, n_muons):
         self.n_muons = n_muons

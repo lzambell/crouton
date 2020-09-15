@@ -15,6 +15,7 @@ def extract_muon():
     time_b = [x[y%10] for x,y in zip(dc.data['t_bot'],dc.data['mu']) if y>=0]
     dc.data['tof'] = [b-t for t,b in zip(time_t,time_b)]
 
+    
     """ get z t/b position of muons """
     dc.data['z_top'] = [cf.z_top[int((y-y%10)/10)] for y in dc.data['mu'] if y>=0]
     dc.data['z_bot'] = [cf.z_bot[y%10] for y in dc.data['mu'] if y>=0]
