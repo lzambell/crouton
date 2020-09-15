@@ -1,0 +1,9 @@
+*************************************************
+* Cosmic Ray tagger Offline UTilities in pythON *
+*************************************************
+
+the software needs the same miniconda environment as for LARDON
+
+To run the code on data : 
+python crouton.py -date <YYYYMMDD> 
+If you want an output file (to be done) -out <optional name>
