@@ -44,7 +44,7 @@ day_to   = ""
 
 for index, arg in enumerate(sys.argv):
     if arg in ['-day'] and len(sys.argv) > index + 1:
-        day = [sys.argv[index + 1]]
+        day = sys.argv[index + 1]
     elif arg in ['-from'] and len(sys.argv) > index+1:
         day_from = sys.argv[index + 1]
     elif arg in ['-to'] and len(sys.argv) > index+1:
@@ -78,7 +78,7 @@ else:
 
 
 t_start = time.time()
-
+print(date)
 files = []
 for d in date : 
     files.extend(glob.glob(cf.data_path+"/CRT_"+d+"*.root"))
