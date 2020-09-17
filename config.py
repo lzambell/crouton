@@ -18,3 +18,12 @@ z_bot = [-207.5, -193.2, -178.9, -164.6, -150.3, -136.0, -121.7, -107.4]
 z_shift = -45.2
 z_top = [x + z_shift for x in z_top]
 z_bot = [x + z_shift for x in z_bot]
+
+
+""" LAr active volume position in cm (bounding box) """
+x_min_lar = -300.
+y_min_lar = -300.
+z_min_lar = -300.
+x_max_lar = 300.
+y_max_lar = 300.
+z_max_lar = 300.

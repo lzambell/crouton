@@ -10,7 +10,6 @@ def extract_muon():
     """ keep only the informations on the muons """
     """ from LPSC : mu = (i_top)*10 + i_bot """
 
-
     """ T->B Time of Flight """
     time_t = [x[int((y-y%10)/10)] for x,y in zip(dc.data['t_top'],dc.data['mu']) if y>=0]
     time_b = [x[y%10] for x,y in zip(dc.data['t_bot'],dc.data['mu']) if y>=0]
@@ -54,5 +53,8 @@ def extract_muon():
     rays = [rt.Ray(t,b) for t,b in zip(v3top, v3bot)]
     in_lar = [box.intersect(r, 0, 10e6) for r in rays]
 
-    dc.data['vtx_in'] = [box.get_point_in(r) for r in rays]
-    dc.data['vtx_out'] = [box.get_point_out(r) for r in rays]
+    if(len(in_lar)-sum(in_lar) !=0):
+        print(" --> ", len(in_lar)-sum(in_lar), " muon(s) triggered not in LAr Fid. Volume")
+
+    dc.data['vtx_in'] = [box.get_point_in(r) if fv is True else [-999., -999., -999.] for r,fv in zip(rays, in_lar)]
+    dc.data['vtx_out'] = [box.get_point_out(r) if fv is True else [-999., -999., -999.] for r,fv in zip(rays, in_lar)]

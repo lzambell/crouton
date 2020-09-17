@@ -18,7 +18,7 @@ class reader:
         
         self.delta_t  = self.t_last - self.t_first
 
-        dc.runs[-1].set_run_infos(self.t_first, self.t_last, self.n_events, self.n_files)
+        dc.the_run.set_run_infos(self.t_first, self.t_last, self.n_events, self.n_files)
 
 
     def unpack(self, dict_name, branch_name):
