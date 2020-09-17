@@ -12,7 +12,7 @@ python crouton.py -day <YYYYMMDD>
 --> over several days
 python crouton.py -from <YYYYMMDD> -to <YYYYMMDD>
 
-If you want an output file (to be done) -out <optional name>
+If you want an output file, add -out <optional name>
 
 ---
 (x, y, z) axes conventions is the same as in LARDON

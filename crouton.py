@@ -4,13 +4,14 @@ import sys
 import glob
 import time
 import datetime 
+import tables as tables
 
 import config as cf
 import data_containers as dc
 import reader as read
 import muons as ana_mu
 import plot as plot
-
+import store as store
 
 def need_help():
     print("Usage: python crouton.py ")
@@ -88,25 +89,25 @@ if(len(files) == 0):
     print("no file(s) available on ", day, " or from ", day_from, " to ", day_to, ", sorry...")
     sys.exit()
 
-dc.runs.append(dc.run_info())
-
-if(outname_option):
-    outname_option = "_"+outname_option
-else:
-    outname_option = ""
-    
-
-if(len(day)>0):
-    name_out = cf.store_path + "/" + day + outname_option + ".h5"    
-else:
-    name_out = cf.store_path + "/" + day_from + "_to_" + day_to + outname_option + ".h5"
-
-
-print("output file : ", name_out)
 output_mess = "not" if do_store is False else ""
 print("-> will "+output_mess+" store output file")
 
 
+
+if(do_store is True):
+    if(outname_option):
+        outname_option = "_"+outname_option
+    else:
+        outname_option = ""    
+
+    if(len(day)>0):
+        name_out = cf.store_path + "/" + day + outname_option + ".h5"    
+    else:
+        name_out = cf.store_path + "/" + day_from + "_to_" + day_to + outname_option + ".h5"
+
+    print(" output file is ", name_out)
+    output = tables.open_file(name_out, mode="w", title="Reconstruction Output")
+    
 
 day_ini  = files[0][-20:-12]
 hour_ini = files[0][-11:-5]
@@ -117,15 +118,19 @@ hour_end = files[-1][-11:-5]
 n_files = len(files)
 reading = read.reader(files)
 
-dc.runs[-1].set_run_name(day_ini, day_end, hour_ini, hour_end)
-dc.runs[-1].dump()
+dc.the_run.set_run_name(day_ini, day_end, hour_ini, hour_end)
+dc.the_run.dump()
+
+if(do_store):
+    store.store_run_infos(output, time.time())
+
 
 """ to get all events """
 #reading.get_all_events()
 
 """ to get only muon-like events """
 n_muons = reading.get_all_muons()
-dc.runs[-1].set_n_muons_and_rate(n_muons)
+dc.the_run.set_n_muons_and_rate(n_muons)
 
 
 """ clean mu-like events, and compute extra things (tof, theta, phi) """
@@ -133,5 +138,8 @@ ana_mu.extract_muon()
 
 print(" time to open and extract muons: %.3f s"%(time.time()-t_start))
 plot.plot_run_summary()
-#sys.exit()
 
+
+if(do_store):
+    store.store_muons(output)
+    output.close()

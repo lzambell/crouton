@@ -3,7 +3,6 @@ import numpy as np
 
 
 data = {}
-runs = []
 
 class run_info:
     def __init__(self):
@@ -43,10 +42,13 @@ class run_info:
         self.rate_muons = self.n_muons/self.run_dt
 
     def dump(self):
+        print("\n* - * - * - * - * - * - * - * - * - * - * - * - ")
         print(" Run analyzed from ", self.date_ini, " to ", self.date_end)
         print(" Processed hours from ", self.hour_ini, " to ", self.hour_end)
         print(" -> ", self.n_files, " file(s)")
         print(" 1st event : ", self.t_first, " Last : ", self.t_last)
         print(" Elapsed time: ", self.run_dt, "s")
         print(" Nb of triggered events: ", self.n_events)
+        print("* - * - * - * - * - * - * - * - * - * - * - * - \n")
         
+the_run = run_info()
